@@ -9,7 +9,149 @@ app_file: app.py
 pinned: false
 ---
 
-# Sunbird AI Internship Assessment Exercise
+# Sunbird AI — Transcribe, Summarise, Translate & Speak
+
+A Generative AI web application powered entirely by the [Sunbird AI API](https://docs.sunbird.ai/introduction). Users provide text or an audio file in English, and the app runs it through a full pipeline: transcription → summarisation → translation into a Ugandan local language → text-to-speech audio output.
+
+---
+
+## Architecture Overview
+
+```
+User Input
+  ├── Text  ──────────────────────────────────────────┐
+  └── Audio ──► /tasks/stt (Speech-to-Text) ──────────┤
+                                                       ▼
+                                        /tasks/summarise (Summarisation)
+                                                       ▼
+                                        /tasks/translate (Translation)
+                                                       ▼
+                                        /tasks/tts (Text-to-Speech)
+                                                       ▼
+                                 Transcript · Summary · Translation · Audio
+```
+
+| Step | Sunbird Endpoint | Description |
+|---|---|---|
+| Speech-to-Text | `POST /tasks/stt` | Transcribes uploaded/recorded audio to text |
+| Summarisation | `POST /tasks/summarise` | Condenses text into a short summary |
+| Translation | `POST /tasks/translate` | Translates summary into a Ugandan local language |
+| Text-to-Speech | `POST /tasks/tts` | Generates spoken audio from the translated text |
+
+---
+
+## Local Setup
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/thefr3spirit/internship-assessment.git
+cd internship-assessment
+```
+
+### 2. Create and activate a virtual environment
+```bash
+python -m venv venv
+
+# Windows
+venv\Scripts\activate.bat
+
+# Linux/Mac
+source venv/bin/activate
+```
+
+### 3. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Configure environment variables
+```bash
+cp .env.example .env
+```
+Open `.env` and fill in your Sunbird AI API token (see [Environment Variables](#environment-variables) below).
+
+### 5. Run the app
+```bash
+python app.py
+```
+Open **http://127.0.0.1:7860** in your browser.
+
+---
+
+## Environment Variables
+
+| Variable | Description |
+|---|---|
+| `SUNBIRD_API_TOKEN` | Your Sunbird AI API access token. Obtain one at [api.sunbird.ai](https://api.sunbird.ai/) |
+
+See `.env.example` for the template.
+
+---
+
+## Usage
+
+### Text Input
+
+Type or paste English text, select a target language, and click **Run Pipeline**.
+
+![Text input with "Hello, I need your help" entered and Ateso selected as target language](docs/screenshots/text-input.jpg)
+
+The app returns a summary, translated summary, and a playable audio clip of the translation.
+
+![Results showing summary "I require assistance and would like to speak with you", Ateso translation, and audio player](docs/screenshots/text-results.jpg)
+
+---
+
+### Audio Input
+
+Switch to the **Audio Input** tab, upload an audio file or record via microphone, select a target language, and click **Run Pipeline**.
+
+![Audio input tab with a 3-second audio file uploaded and Acholi selected](docs/screenshots/audio-input.jpg)
+
+The app transcribes the audio, summarises it, translates it, and generates speech.
+
+![Results showing transcript "oli otya", summary "How are you?", Acholi translation "Itye nining?" and audio player](docs/screenshots/audio-results.jpg)
+
+---
+
+## Deployed Link
+
+**https://huggingface.co/spaces/thefr3spirit/sunbird-translator**
+
+---
+
+## Known Limitations
+
+- **Processing time**: Each request makes 3–4 sequential API calls. Expect 30–200 seconds depending on input length and API load.
+- **Audio duration**: Audio files longer than 5 minutes are rejected. The app enforces this before sending to the API.
+- **Supported audio formats**: mp3, wav, ogg, m4a, aac, mp4, webm.
+- **Summarisation languages**: The `/tasks/summarise` endpoint only supports English and Luganda input.
+- **Translation target languages**: Luganda, Acholi, Ateso, Runyankole, Lugbara.
+- **Internet required**: The app makes live calls to the Sunbird API — it does not work offline.
+- **Free tier latency**: The Sunbird Free tier may experience cold starts on inference endpoints.
+
+---
+
+## Project Structure
+
+```
+internship-assessment/
+├── app.py                        # Gradio UI entry point
+├── backend/
+│   ├── __init__.py
+│   ├── sunbird_client.py         # Sunbird API wrapper (STT, summarise, translate, TTS)
+│   ├── pipeline.py               # Orchestrates the full pipeline
+│   ├── test_sunbird_client.py    # Manual tests for each API function
+│   └── test_pipeline.py          # Manual end-to-end pipeline test
+├── exercises/
+│   └── basics.py                 # Part 1: collatz & distinct_numbers implementations
+├── tests/
+│   └── test_basics.py            # pytest tests for Part 1
+├── docs/screenshots/             # UI screenshots for this README
+├── requirements.txt
+├── .env.example
+└── constants.py
+```
 
 This assessment consists of 3 parts:
 - Programming exercises.
