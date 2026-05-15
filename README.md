@@ -1,3 +1,14 @@
+---
+title: Sunbird Translator
+emoji: 🌍
+colorFrom: yellow
+colorTo: green
+sdk: gradio
+sdk_version: "5.29.1"
+app_file: app.py
+pinned: false
+---
+
 # Sunbird AI Internship Assessment Exercise
 
 This assessment consists of 3 parts:
