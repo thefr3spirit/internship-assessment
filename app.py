@@ -191,4 +191,4 @@ with gr.Blocks(title='Sunbird AI Pipeline') as app:
 #launch the app
 
 if __name__ == '__main__':
-    app.launch(share=False)
+    app.launch(server_name="0.0.0.0", server_port=7860)

@@ -94,11 +94,11 @@ See `.env.example` for the template.
 
 Type or paste English text, select a target language, and click **Run Pipeline**.
 
-![Text input with "Hello, I need your help" entered and Ateso selected as target language](docs/screenshots/text-input.jpg)
+![Text input with "Hello, I need your help" entered and Ateso selected as target language](https://raw.githubusercontent.com/thefr3spirit/internship-assessment/main/docs/screenshots/text-input.jpg)
 
 The app returns a summary, translated summary, and a playable audio clip of the translation.
 
-![Results showing summary "I require assistance and would like to speak with you", Ateso translation, and audio player](docs/screenshots/text-results.jpg)
+![Results showing summary "I require assistance and would like to speak with you", Ateso translation, and audio player](https://raw.githubusercontent.com/thefr3spirit/internship-assessment/main/docs/screenshots/text-results.jpg)
 
 ---
 
@@ -106,11 +106,11 @@ The app returns a summary, translated summary, and a playable audio clip of the 
 
 Switch to the **Audio Input** tab, upload an audio file or record via microphone, select a target language, and click **Run Pipeline**.
 
-![Audio input tab with a 3-second audio file uploaded and Acholi selected](docs/screenshots/audio-input.jpg)
+![Audio input tab with a 3-second audio file uploaded and Acholi selected](https://raw.githubusercontent.com/thefr3spirit/internship-assessment/main/docs/screenshots/audio-input.jpg)
 
 The app transcribes the audio, summarises it, translates it, and generates speech.
 
-![Results showing transcript "oli otya", summary "How are you?", Acholi translation "Itye nining?" and audio player](docs/screenshots/audio-results.jpg)
+![Results showing transcript "oli otya", summary "How are you?", Acholi translation "Itye nining?" and audio player](https://raw.githubusercontent.com/thefr3spirit/internship-assessment/main/docs/screenshots/audio-results.jpg)
 
 ---
 
