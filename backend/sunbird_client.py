@@ -38,12 +38,33 @@ def transcribe(audio_file_path: str) -> str:
     sends an audio file to STT API
     Returns transcribed text as a plin string
     """
+    # Map file extensions to their correct MIME types
+    # The server uses this to identify the audio format
+    # Gradio saves microphone recordings as .webm, uploaded files keep their original extension
+    MIME_TYPES = {
+        ".mp3": "audio/mpeg",
+        ".wav": "audio/wav",
+        ".ogg": "audio/ogg",
+        ".m4a": "audio/mp4",
+        ".aac": "audio/aac",
+        ".mp4": "audio/mp4",
+        ".webm": "audio/webm",
+    }
+
+    # os.path.splitext splits "recording.webm" into ("recording", ".webm")
+    # [1] gets the extension, .lower() handles uppercase like ".MP3"
+    ext = os.path.splitext(audio_file_path)[1].lower()
+
+    # .get() returns the matching MIME type, or falls back to "application/octet-stream"
+    # if the extension is unrecognised (generic binary fallback)
+    mime_type = MIME_TYPES.get(ext, "application/octet-stream")
+
     #open audio file in binary mode
     with open(audio_file_path, "rb") as audio_file:
         #send a POST request
         response = requests.post(
             f"{BASE_URL}/tasks/stt",
-            files={"audio": (os.path.basename(audio_file_path), audio_file, "audio/mpeg")},
+            files={"audio": (os.path.basename(audio_file_path), audio_file, mime_type)},
             headers=_headers()
         )
     #check for server errors
